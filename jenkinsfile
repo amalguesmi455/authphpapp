@@ -3,7 +3,7 @@ pipeline {
     
      agent any
     
-  tools {php "php"}
+  tools {php "php:7.4-apache"}
     stages {
         
         stage('Deployer app php'){
@@ -12,13 +12,19 @@ pipeline {
            echo 'test'
           }
         }
-        stage('build')
-         {
-            steps {
-                sh 'php --version'
         
+        stage('Build') {
+          steps {
+              
+          sh 'php:7.4-apache'
+            
+          }
         }  
-        }
+        /* stage('Test') {
+          steps {
+            sh 'npm test'
+          }
+        }*/
         stage('Build image with docker') {
              steps{
                 script{
@@ -51,18 +57,9 @@ sh ' docker login -u amalguesmi -p 22651530mama  '
         
         
         
-        /*stage('Docker Build and Push'){
-            steps{
-                withDockerRegistry([credentialsId: "docker-hub", url:""]){
-                    //sh 'printenv'
-                    sh 'docker build -t amalguesmi/appnode-oct:""$GIT_COMMIT"" .'
-                    sh 'docker push amalguesmi/appnode-oct:""$GIT_COMMIT"" '
-                }
-        }
-
+        
+        
          
         
     }
-  }
-
 }
