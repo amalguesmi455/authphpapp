@@ -21,7 +21,7 @@ pipeline {
                 }
              }
                     
-          }  
+          }   
        
     
     stage('Push Image') {
@@ -35,3 +35,5 @@ pipeline {
     }
 
  
+ }
+    }
