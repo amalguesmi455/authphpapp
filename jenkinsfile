@@ -22,7 +22,15 @@ pipeline {
              }
                     
           }   
-       
+         stage('login') {
+      steps {
+      
+        sh 'php index.php'
+        
+      }
+    }
+  }
+} 
     
    stage('Push image') {
             steps{
