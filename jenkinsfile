@@ -1,42 +1,33 @@
 def dockerimage
 pipeline {
-    
-     agent any
-    
-  tools {php "php:7.4-apache"}
-    stages {
-        
-        stage('Deployer app php'){
-
-          steps {
-           echo 'test'
-          }
-        }
-        
-        stage('Build') {
-          steps {
-              
-          sh 'php:7.4-apache'
-            
-          }
-        }  
-        /* stage('Test') {
-          steps {
-            sh 'npm test'
-          }
-        }*/
-        stage('Build image with docker') {
+  agent any
+  stages {
+    stage('verify version') {
+      steps {
+        sh 'php --version'
+      }
+    }
+   stage('Build image with docker') {
              steps{
                 script{
                    
-                   dockerImage = docker.build("amalguesmi/phpappauth:tagname")
+                   dockerImage = docker.build("amalguesmi/phpappauth:latest")
                     
                 }
              }
                     
-          }
+          }  
+   stage('login') {
+      steps {
+      
+        sh 'php index.php'
         
-     stage('Push image') {
+      }
+    }
+  }
+}  
+
+ stage('Push image') {
             steps{
                 script{
            
@@ -46,20 +37,10 @@ pipeline {
         
 sh ' docker login -u amalguesmi -p 22651530mama  '
                  // Push your image now
-            sh "docker push amalguesmi/phpappauth:tagname"
+            sh "docker push amalguesmi/phpappauth:latest"
                 
         }
     }
                     
               }
-               }          
-             
-        
-        
-        
-        
-        
-         
-        
-    }
-}
+               }   
