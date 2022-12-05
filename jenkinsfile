@@ -17,11 +17,7 @@ pipeline {
                 script{
                    
                    dockerImage = docker.build("amalguesmi/phpappauth:latest")
-                    withCredentials([usernamePassword( credentialsId: 'docker-hub', usernameVariable: 'amalguesmi', passwordVariable: '22651530mama')]) {
-        
-                  sh ' docker login -u amalguesmi -p 22651530mama  '
-                
-            sh "docker push amalguesmi/phpappauth:latest"
+                  
                 }
              }
                     
